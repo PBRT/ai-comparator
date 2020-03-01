@@ -21,7 +21,7 @@ const theme = {
 export function App() {
   return (
     <Provider store={configureStore()}>
-      <div className={"App " + Classes.DARK}>
+      <div className={`App ${Classes.DARK}`}>
         <ThemeProvider theme={theme}>
           <Navbar routesConfig={ROUTES} />
           <Layout>
@@ -54,6 +54,6 @@ export function AppWithRouter() {
 
 const Layout = styled.div`
   color: ${p => p.theme.colors.WHITE};
-  padding: 12px;
+  padding: 12px 24px;
   height: calc(100vh - 50px);
 `;

@@ -9,9 +9,23 @@ import {
 
 import { TEST_IDS } from "../../tests/test-ids";
 import { RouteConfig, RoutesConfig } from "../../app/Routes";
+import { useWindowSize } from "../../utils/useWindowSize";
 
-function NavButton({ label, path, icon, testID }: RouteConfig) {
+type NavButtonProps = RouteConfig & {
+  isHomeButton: boolean | null;
+};
+
+function NavButton({
+  label,
+  path,
+  icon,
+  testID,
+  isHomeButton
+}: NavButtonProps) {
   const history = useHistory();
+  const { innerWidth } = useWindowSize();
+  const isTabletOrLower = innerWidth != null && innerWidth < 600;
+  const shouldShowLabel = !isTabletOrLower || isHomeButton;
 
   function handleClick() {
     history.push(path);
@@ -20,7 +34,7 @@ function NavButton({ label, path, icon, testID }: RouteConfig) {
     <Button
       className={Classes.MINIMAL}
       icon={icon}
-      text={label}
+      text={shouldShowLabel ? label : null}
       onClick={handleClick}
       data-testid={testID}
     />
@@ -42,6 +56,7 @@ function Navbar({ routesConfig: { home, routes } }: Props) {
           key={home.path}
           icon={home.icon}
           testID={home.testID}
+          isHomeButton
         />
         <NavBarComponent.Divider />
       </NavBarComponent.Group>
@@ -53,6 +68,7 @@ function Navbar({ routesConfig: { home, routes } }: Props) {
             key={path}
             icon={icon}
             testID={testID}
+            isHomeButton={false}
           />
         ))}
       </NavBarComponent.Group>
