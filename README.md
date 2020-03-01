@@ -20,10 +20,10 @@ To run the **production** version, follow those steps:
 
 ```
 $ yarn build
-$ serve -s build
+$ yarn serve
 ```
 
-Then open your favourite browser and go to http://localhost:9000/ to see the production version of the app. The app is currently hosted on [Netlify](https://www.netlify.com/).
+Then open your favourite browser and go to http://localhost:9000/ to see the production version of the app. The app is currently hosted with [Netlify](https://www.netlify.com/). You can change the local port in the file `server.ts`.
 
 ### Tests
 
