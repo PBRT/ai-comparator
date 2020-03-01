@@ -38,5 +38,4 @@ export function asFallibleAsyncResponse<T>(data: T): Promise<T> {
       }
     }, randomBetween(MIN_LATENCY_MS, MAX_LATENCY_MS));
   });
-  return Promise.resolve(data);
 }

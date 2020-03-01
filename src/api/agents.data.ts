@@ -1,7 +1,7 @@
-import { Agent } from "./api";
-import { nextId } from "./helpers";
+import { Agent } from "./agents.types";
+import { nextId } from "./agents.helpers";
 
-const AGENTS = [
+const AGENTS: Array<Agent> = [
   {
     id: nextId(),
     name: "IMPALA",

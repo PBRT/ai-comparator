@@ -1,20 +1,6 @@
-import { asFallibleAsyncResponse } from "./helpers";
-
-type AgentId = number;
-
-interface Agent {
-  readonly id: AgentId;
-  readonly name: string;
-  readonly description: string;
-  readonly tasks: Task[];
-}
-
-interface Task {
-  readonly id: string;
-  readonly name: string;
-  readonly category: "memory" | "planning" | "logic";
-  readonly score: number;
-}
+import { asFallibleAsyncResponse } from "./agents.helpers";
+import { Agent, AgentId } from "./agents.types";
+import AGENTS from "./agents.data";
 
 // == Agents API Service ==
 export class AgentsApi {
@@ -29,4 +15,11 @@ export class AgentsApi {
   getAgent(id: AgentId): Promise<Agent | undefined> {
     return asFallibleAsyncResponse(AGENTS.find(agent => agent.id === id));
   }
+}
+
+const agentApiInstance = new AgentsApi();
+
+// Avoid to re-create an instance at every calls
+export function getAgentApiInstance() {
+  return agentApiInstance;
 }

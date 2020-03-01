@@ -27,8 +27,22 @@ Then open your favourite browser and go to http://localhost:9000/.
 
 To build this project, I've used the following:
 
-* [Create React App](https://create-react-app.dev/docs/getting-started/): Bootstrap an react application with typescript.
-* [React Router](https://reacttraining.com/react-router/web/guides/quick-start): Router to handle SPA multiple pages.
-* [Styled Components](https://styled-components.com/): Great to build re-usable components with all the CSS features.
-* [BlueprintJS](https://blueprintjs.com/): UI-kit including plenty of graphics components ideal to represent data.
-* [Commit Lint](https://github.com/conventional-changelog/commitlint): To keep a great commit history
+* UI Layer
+
+  * [Create React App](https://create-react-app.dev/docs/getting-started/): Bootstrap an react application with typescript.
+  * [React Router](https://reacttraining.com/react-router/web/guides/quick-start): Router to handle SPA multiple pages.
+
+* Data Layer
+
+  * [Redux](https://redux.js.org/) and [React Redux](https://react-redux.js.org/): Scalable way to manage state globally. New react hooks (`useReducer` and `useContext`) could have been used, but still miss features needed on large apps (time travelling, easy testing) and can be sub-optimal (to many re-renders).
+  * [Redux Thunk](https://github.com/reduxjs/redux-thunk): To handle side effects and write async actions creators.
+
+* Styles
+
+  * [Styled Components](https://styled-components.com/): Great to build re-usable components with all the CSS features.
+  * [BlueprintJS](https://blueprintjs.com/): UI-kit including plenty of graphics components ideal to represent data.
+
+* Development tools
+
+  * [Redux Logger](https://github.com/LogRocket/redux-logger): Log actions fired and updated state in the console.
+  * [Commit Lint](https://github.com/conventional-changelog/commitlint): To keep a great commit history.
