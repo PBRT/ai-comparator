@@ -1,6 +1,6 @@
-import { asFallibleAsyncResponse } from "./agents.helpers";
-import { Agent, AgentId } from "./agents.types";
 import AGENTS from "./agents.data";
+import { Agent, AgentId } from "./agents.types";
+import { asFallibleAsyncResponse } from "./agents.helpers";
 
 // == Agents API Service ==
 export class AgentsApi {

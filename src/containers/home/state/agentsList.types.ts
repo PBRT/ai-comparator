@@ -1,4 +1,5 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
+
 import { Agent } from "../../../api/agents.types";
 
 export const REQUEST_AGENTS_LIST = "REQUEST_AGENTS_LIST";

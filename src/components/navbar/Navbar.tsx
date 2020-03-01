@@ -7,10 +7,10 @@ import {
   Alignment
 } from "@blueprintjs/core";
 
-// Routes type
+import { TEST_IDS } from "../../tests/test-ids";
 import { RouteConfig, RoutesConfig } from "../../app/Routes";
 
-function NavButton({ label, path, icon }: RouteConfig) {
+function NavButton({ label, path, icon, testID }: RouteConfig) {
   const history = useHistory();
 
   function handleClick() {
@@ -22,6 +22,7 @@ function NavButton({ label, path, icon }: RouteConfig) {
       icon={icon}
       text={label}
       onClick={handleClick}
+      data-testid={testID}
     />
   );
 }
@@ -32,7 +33,7 @@ type Props = {
 
 function Navbar({ routesConfig: { home, routes } }: Props) {
   return (
-    <NavBarComponent>
+    <NavBarComponent data-testid={TEST_IDS.COMPONENT_NAVBAR}>
       <NavBarComponent.Group align={Alignment.LEFT}>
         {/* Special case for the home button */}
         <NavButton
@@ -40,12 +41,19 @@ function Navbar({ routesConfig: { home, routes } }: Props) {
           path={home.path}
           key={home.path}
           icon={home.icon}
+          testID={home.testID}
         />
         <NavBarComponent.Divider />
       </NavBarComponent.Group>
       <NavBarComponent.Group align={Alignment.RIGHT}>
-        {routes.map(({ path, label, icon }) => (
-          <NavButton label={label} path={path} key={path} icon={icon} />
+        {routes.map(({ path, label, icon, testID }) => (
+          <NavButton
+            label={label}
+            path={path}
+            key={path}
+            icon={icon}
+            testID={testID}
+          />
         ))}
       </NavBarComponent.Group>
     </NavBarComponent>

@@ -1,7 +1,10 @@
 import React from "react";
-import styled, { ThemeProvider } from "styled-components";
+import { Provider } from "react-redux";
 import { Colors, Classes } from "@blueprintjs/core";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import styled, { ThemeProvider } from "styled-components";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import configureStore from "../redux/store";
 
 // Components
 import Navbar from "../components/navbar/Navbar";
@@ -15,32 +18,39 @@ const theme = {
   colors: Colors
 };
 
-function App() {
+export function App() {
   return (
-    <div className={"App " + Classes.DARK}>
-      <ThemeProvider theme={theme}>
-        <Router>
+    <Provider store={configureStore()}>
+      <div className={"App " + Classes.DARK}>
+        <ThemeProvider theme={theme}>
           <Navbar routesConfig={ROUTES} />
           <Layout>
-            <Route
-              exact
-              key={ROUTES.home.path}
-              path={ROUTES.home.path}
-              component={ROUTES.home.component}
-            />
-            {ROUTES.routes.map(({ path, component }) => (
-              <Route exact key={path} path={path} component={component} />
-            ))}
-            <Route path="/404" component={NotFound} />
-            <Redirect from="*" to="/404" />
+            <Switch>
+              <Route
+                exact
+                key={ROUTES.home.path}
+                path={ROUTES.home.path}
+                component={ROUTES.home.component}
+              />
+              {ROUTES.routes.map(({ path, component }) => (
+                <Route exact key={path} path={path} component={component} />
+              ))}
+              <Route component={NotFound} />
+            </Switch>
           </Layout>
-        </Router>
-      </ThemeProvider>
-    </div>
+        </ThemeProvider>
+      </div>
+    </Provider>
   );
 }
 
-export default App;
+export function AppWithRouter() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}
 
 const Layout = styled.div`
   color: ${p => p.theme.colors.WHITE};

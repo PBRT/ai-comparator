@@ -35,32 +35,33 @@ $ yarn test
 
 Different kind of tests are covering this product:
 
-* **Reducers testing**: To ensure non-regression on refactor and data-structures
-* **View testing**: Making sure all the views can be rendered, routine test
-* **Component testing**: Only for major components such as list view, ensuring feature is not broken
+* **View testing**:Check if all the views can be rendered and are not broken.
+* **Reducers testing**: Ensure non-regression on refactor and data-structures.
+* **Component testing**: Only for major components such as list view to check it renders properly.
 
-### Libraries used
+### Libraries
 
 To build this project, I've used the following:
 
-* UI Layer
+* **UI Layer**
 
-  * [Create React App](https://create-react-app.dev/docs/getting-started/): Bootstrap an react application with typescript.
   * [React Router](https://reacttraining.com/react-router/web/guides/quick-start): Router to handle SPA multiple pages.
+  * [Create React App](https://create-react-app.dev/docs/getting-started/): Bootstrap an react application with typescript.
 
-* Data Layer
+* **Data Layer**
 
-  * [Redux](https://redux.js.org/) and [React Redux](https://react-redux.js.org/): Scalable way to manage state globally. New react hooks (`useReducer` and `useContext`) could have been used, but still miss features needed on large apps (time travelling, easy testing) and can be sub-optimal (to many re-renders).
   * [Redux Thunk](https://github.com/reduxjs/redux-thunk): To handle side effects and write async actions creators.
+  * [Redux](https://redux.js.org/) and [React Redux](https://react-redux.js.org/): Scalable way to manage state globally. New react hooks (`useReducer` and `useContext`) could have been used, but still miss features needed on large apps (time travelling, easy testing) and can be sub-optimal (to many re-renders).
 
-* Styles
+* **Styles**
 
   * [Styled Components](https://styled-components.com/): Great to build re-usable components with all the CSS features.
   * [BlueprintJS](https://blueprintjs.com/): UI-kit including plenty of graphics components ideal to represent data.
 
-* Development tools
+* **Development tools**
 
-  * [Jest](https://jestjs.io/): To run the data layer and components tests.
-  * [Netlify](https://www.netlify.com/): Hooked to GitHub for easy deploy on master change, used for hosting online.
-  * [Redux Logger](https://github.com/LogRocket/redux-logger): Log actions fired and updated state in the console.
   * [Commit Lint](https://github.com/conventional-changelog/commitlint): To keep a great commit history.
+  * [Jest](https://jestjs.io/): To run the data layer and components tests.
+  * [React Testing Library](https://testing-library.com/): Helpers to test React components.
+  * [Redux Logger](https://github.com/LogRocket/redux-logger): Log actions fired and updated state in the console.
+  * [Netlify](https://www.netlify.com/): Hooked to GitHub for easy deploy on master change, used for hosting online.

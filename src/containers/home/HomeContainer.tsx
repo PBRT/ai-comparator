@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "@blueprintjs/core";
-import { RootState } from "../../redux/rootReducer";
 import { useDispatch, useSelector } from "react-redux";
 
+import { TEST_IDS } from "../../tests/test-ids";
+import { RootState } from "../../redux/rootReducer";
 import { requestAgentsList } from "./state/agentsList.actions";
 
 function HomeContainer() {
@@ -17,7 +18,7 @@ function HomeContainer() {
   const agentsList = useSelector(selectAgentsList);
 
   return (
-    <RootContainer>
+    <RootContainer data-testid={TEST_IDS.CONTAINER_HOME_ROOT}>
       <h1>Agent List: {agentsList.list.length}</h1>
       <Button onClick={getAgentsList} text="Load agent list" />
     </RootContainer>

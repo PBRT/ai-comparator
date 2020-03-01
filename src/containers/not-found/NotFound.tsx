@@ -1,10 +1,12 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
+import styled, { keyframes } from "styled-components";
+
+import { TEST_IDS } from "../../tests/test-ids";
 
 function NotFound() {
   return (
-    <RootContainer>
+    <RootContainer data-testid={TEST_IDS.CONTAINER_NOT_FOUND_ROOT}>
       <ImageContainer>
         <img
           width="250px"
