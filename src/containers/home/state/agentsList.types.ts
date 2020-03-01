@@ -7,7 +7,7 @@ export const ERROR_AGENTS_LIST = "ERROR_AGENTS_LIST";
 
 export interface AgentsListState {
   isLoading: boolean;
-  error: string | null;
+  error: Error | null;
   list: ReadonlyArray<Agent>;
 }
 
@@ -22,7 +22,7 @@ export interface ReceiveAgentsListAction {
 
 export interface ErrorAgentsListAction {
   type: typeof ERROR_AGENTS_LIST;
-  error: string;
+  error: Error;
 }
 
 export type AgentsListActionType =

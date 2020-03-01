@@ -2,7 +2,7 @@
 
 A light-weight proof of concept UI to compare AI agent performances between themselves, as well as a detail page for each of those. The agents are currently simulated from a **config file**. In a short term future, this UI would be connected to real data, helping researchers to understand easily which ones perform the best.
 
-### How to run it
+### Local run
 
 To run **locally**, follow those steps:
 
@@ -12,16 +12,32 @@ $ cd ai-comparator
 $ yarn start
 ```
 
-Then open your favourite browser and go to http://localhost:3000/.
+That will install all the needed libraries and start a server. Then open your favourite browser and go to http://localhost:3000/.
+
+### Build and deploy
 
 To run the **production** version, follow those steps:
 
 ```
 $ yarn build
-$ yarn serve
+$ serve -s build
 ```
 
-Then open your favourite browser and go to http://localhost:9000/.
+Then open your favourite browser and go to http://localhost:9000/ to see the production version of the app. The app is currently hosted on [Netlify](https://www.netlify.com/).
+
+### Tests
+
+All the tests are running with [Jest](https://jestjs.io/) and can be run in watch mode simply by using the following command:
+
+```
+$ yarn test
+```
+
+Different kind of tests are covering this product:
+
+* **Reducers testing**: To ensure non-regression on refactor and data-structures
+* **View testing**: Making sure all the views can be rendered, routine test
+* **Component testing**: Only for major components such as list view, ensuring feature is not broken
 
 ### Libraries used
 
@@ -44,5 +60,7 @@ To build this project, I've used the following:
 
 * Development tools
 
+  * [Jest](https://jestjs.io/): To run the data layer and components tests.
+  * [Netlify](https://www.netlify.com/): Hooked to GitHub for easy deploy on master change, used for hosting online.
   * [Redux Logger](https://github.com/LogRocket/redux-logger): Log actions fired and updated state in the console.
   * [Commit Lint](https://github.com/conventional-changelog/commitlint): To keep a great commit history.
