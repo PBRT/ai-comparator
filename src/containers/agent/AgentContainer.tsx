@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { Spinner, Icon } from "@blueprintjs/core";
-import React, { ReactNode, useCallback, useEffect } from "react";
+import { IconNames } from "@blueprintjs/icons";
 import { useDispatch, useSelector } from "react-redux";
+import { Spinner, Icon, Intent } from "@blueprintjs/core";
+import React, { ReactNode, useCallback, useEffect } from "react";
 
 import { TEST_IDS } from "../../tests/test-ids";
 import { AgentDetails } from "./state/agent.types";
@@ -67,9 +68,10 @@ function AgentContainerWrapper({
           {
             action: refresh,
             label: "Refresh",
-            icon: "refresh",
+            icon: IconNames.REFRESH,
             tooltipText: "Re-fresh to get the latest data.",
-            disabled: false
+            disabled: false,
+            intent: Intent.PRIMARY
           }
         ]}
       />

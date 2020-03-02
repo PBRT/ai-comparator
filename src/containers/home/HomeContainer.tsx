@@ -1,7 +1,9 @@
-import React, { useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { Spinner, Icon } from "@blueprintjs/core";
+import { useHistory } from "react-router-dom";
+import { IconNames } from "@blueprintjs/icons";
+import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Spinner, Icon, Intent } from "@blueprintjs/core";
 
 import { TEST_IDS } from "../../tests/test-ids";
 import { RootState } from "../../redux/rootReducer";
@@ -47,12 +49,14 @@ function AgentsListComp(props: { agentsList: AgentsListState }) {
 }
 
 function HomeContainer() {
-  // Redux hooks
   const dispatch = useDispatch();
-  // Memoized- fetch
   const getAgentsList = useCallback(() => dispatch(requestAgentsList()), [
     dispatch
   ]);
+  const history = useHistory();
+  function handleRedirectToCompareView() {
+    history.push(`/compare-agents`);
+  }
 
   function refresh() {
     dispatch(requestAgentsList(false /* invalidate cache */));
@@ -68,7 +72,8 @@ function HomeContainer() {
 
   const selectAgentsList = (state: RootState) => state.agentsList;
   const agentsList = useSelector(selectAgentsList);
-
+  const selectCompareAgents = (state: RootState) => state.compareAgents;
+  const { agentsSelected } = useSelector(selectCompareAgents);
   return (
     <RootContainer data-testid={TEST_IDS.CONTAINER_HOME_ROOT}>
       <SectionHeader
@@ -78,16 +83,18 @@ function HomeContainer() {
           {
             action: refresh,
             label: "Refresh",
-            icon: "refresh",
+            icon: IconNames.REFRESH,
             tooltipText: "Re-fresh to get the latest data.",
-            disabled: false
+            disabled: false,
+            intent: Intent.NONE
           },
           {
-            action: refresh,
+            action: handleRedirectToCompareView,
             label: "Compare",
-            icon: "comparison",
+            icon: IconNames.COMPARISON,
             tooltipText: "Select two agents to compare them",
-            disabled: true
+            disabled: agentsSelected.size < 2,
+            intent: Intent.SUCCESS
           }
         ]}
       />

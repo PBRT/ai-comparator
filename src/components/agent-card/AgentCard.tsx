@@ -1,14 +1,36 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { Button, Card, Elevation, Intent } from "@blueprintjs/core";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Card, Elevation, Intent, Tooltip } from "@blueprintjs/core";
 
 import { Agent } from "../../api/agents.types";
+import { RootState } from "../../redux/rootReducer";
+import {
+  deselectAgentToCompare,
+  selectAgentToCompare
+} from "../../containers/compare-agents/state/compareAgents.actions";
 
 function AgentCard({ agent }: { agent: Agent }) {
   const history = useHistory();
+  const dispatch = useDispatch();
   function handleRedirectToDetailView() {
     history.push(`/agent/${agent.id}`);
+  }
+
+  const selectCompareAgents = (state: RootState) => state.compareAgents;
+  const { agentsSelected } = useSelector(selectCompareAgents);
+  const isAgentSelected = agentsSelected.has(agent.id);
+  const buttonLabel = isAgentSelected ? "Deselect" : "Select";
+  const isButtonDisabled = agentsSelected.size === 2 && !isAgentSelected;
+
+  function toggleSelection() {
+    // Deselect
+    if (agentsSelected.has(agent.id)) {
+      dispatch(deselectAgentToCompare(agent.id));
+    } else {
+      dispatch(selectAgentToCompare(agent.id));
+    }
   }
 
   return (
@@ -20,12 +42,18 @@ function AgentCard({ agent }: { agent: Agent }) {
       <p>{agent.description}</p>
       <ButtonsContainer>
         <ButtonComp onClick={handleRedirectToDetailView}>Details</ButtonComp>
-        <ButtonComp
-          intent={Intent.PRIMARY}
-          onClick={handleRedirectToDetailView}
+        <Tooltip
+          disabled={!isButtonDisabled}
+          content="You can select only up to two agents at once"
         >
-          Compare
-        </ButtonComp>
+          <ButtonComp
+            intent={isAgentSelected ? Intent.WARNING : Intent.PRIMARY}
+            onClick={toggleSelection}
+            disabled={isButtonDisabled}
+          >
+            {buttonLabel}
+          </ButtonComp>
+        </Tooltip>
       </ButtonsContainer>
     </CardContainer>
   );

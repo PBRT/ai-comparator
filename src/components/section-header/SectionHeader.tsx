@@ -5,7 +5,8 @@ import {
   Divider,
   IconName,
   Tooltip,
-  Position
+  Position,
+  Intent
 } from "@blueprintjs/core";
 
 import { device } from "../../styles/device";
@@ -19,6 +20,7 @@ type Props = {
     icon: IconName;
     tooltipText: string;
     disabled: boolean;
+    intent: Intent | undefined;
   }>;
 };
 
@@ -36,12 +38,14 @@ function SectionHeader({ title, subtitle, actions }: Props) {
               content={action.tooltipText}
               position={Position.BOTTOM}
               key={action.label}
+              disabled={!action.disabled}
             >
               <ActionButton
                 onClick={action.action}
                 text={action.label}
                 icon={action.icon}
                 disabled={action.disabled}
+                intent={action.intent}
               />
             </Tooltip>
           ))}
