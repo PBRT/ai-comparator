@@ -25,7 +25,7 @@ function NavButton({
 }: NavButtonProps) {
   const history = useHistory();
   const { innerWidth } = useWindowSize();
-  const isTabletOrLower = innerWidth != null && innerWidth < 600;
+  const isTabletOrLower = innerWidth != null && innerWidth < 768;
   const shouldShowLabel = !isTabletOrLower || isHomeButton;
 
   function handleClick() {

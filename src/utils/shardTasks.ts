@@ -1,6 +1,8 @@
-import { Task } from "../api/agents.types";
+import { Task, Category } from "../api/agents.types";
 
-export function shardTasksPerCategories(tasks: ReadonlyArray<Task>) {
+export function shardTasksPerCategories(
+  tasks: ReadonlyArray<Task>
+): Map<Category, Map<string, Task>> {
   const shardedTasks = new Map();
   for (const k in tasks) {
     const { category, id } = tasks[k];

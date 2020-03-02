@@ -46,6 +46,7 @@ To build this project, I've used the following:
 * **UI Layer**
 
   * [React Router](https://reacttraining.com/react-router/web/guides/quick-start): Router to handle SPA multiple pages.
+  * [Recharts](http://recharts.org/): To render responsive and typed diagrams.
   * [Create React App](https://create-react-app.dev/docs/getting-started/): Bootstrap an react application with typescript.
 
 * **Data Layer**

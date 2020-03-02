@@ -1,18 +1,21 @@
 import { Task } from "../api/agents.types";
+import { Colors } from "@blueprintjs/core";
 
-export type StatisticsKeys = "AVG" | "MEDIAN" | "P90";
+export type StatisticsKeys = "AVG" | "MEDIAN";
 
 export interface Statistic {
   id: StatisticsKeys;
   name: string;
+  color: string;
   calculus: (tasks: Map<string, Task>) => number;
 }
 
 // We can simply add other relevant statistics here
-const statistics: Array<Statistic> = [
+export const statistics: Array<Statistic> = [
   {
     id: "AVG",
     name: "Average",
+    color: Colors.BLUE3,
     calculus: tasks => {
       const values = Array.from(tasks.values());
       const sum = values.reduce((acc, { score }) => acc + score, 0);
@@ -22,6 +25,7 @@ const statistics: Array<Statistic> = [
   {
     id: "MEDIAN",
     name: "Median",
+    color: Colors.GREEN3,
     calculus: tasks => {
       const values = Array.from(tasks.values()).map(({ score }) => score);
       const mid = Math.floor(values.length / 2);

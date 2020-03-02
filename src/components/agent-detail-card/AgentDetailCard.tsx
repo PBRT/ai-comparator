@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Card, Elevation, Divider } from "@blueprintjs/core";
 
 import TaskCard from "./TaskCard";
+import TaskGraph from "./TaskGraph";
 import { Agent } from "../../api/agents.types";
 import { device } from "../../styles/device";
 import { shardTasksPerCategories } from "../../utils/shardTasks";
@@ -22,14 +23,18 @@ function AgentDetailCard({ agent }: Props) {
       </FlexContainerSpaced>
       <p>{agent.description}</p>
       <PanelDivider />
+      <SectionTitle>Tasks per categories</SectionTitle>
       <FlexContainer>
         <TasksContainer>
-          <SectionTitle>Tasks per categories</SectionTitle>
           {shardedTasksKeys.map(key => {
             const categoryEntry = shardedTasks.get(key);
+            if (categoryEntry === undefined) {
+              return null;
+            }
             return <TaskCard key={key} category={key} tasks={categoryEntry} />;
           })}
         </TasksContainer>
+        <TaskGraph shardedTasks={shardedTasks} />
       </FlexContainer>
     </CardContainer>
   );
@@ -42,7 +47,12 @@ const CardContainer = styled(Card)`
 `;
 
 const FlexContainer = styled.div`
-  display: flex;
+  display: block;
+  @media ${device.tablet} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 const FlexContainerSpaced = styled.div`
@@ -65,7 +75,7 @@ const PanelDivider = styled(Divider)`
 
 const TasksContainer = styled.div`
   width: 100%;
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     width: 50%;
   }
 `;
