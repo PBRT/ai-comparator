@@ -63,7 +63,15 @@ function AgentContainerWrapper({
       <SectionHeader
         title="AI Agent Details"
         subtitle="Scan in details the properties related to this agent"
-        refresh={refresh}
+        actions={[
+          {
+            action: refresh,
+            label: "Refresh",
+            icon: "refresh",
+            tooltipText: "Re-fresh to get the latest data.",
+            disabled: false
+          }
+        ]}
       />
       {children}
     </div>

@@ -74,7 +74,22 @@ function HomeContainer() {
       <SectionHeader
         title="AI Dashboard"
         subtitle="Visualize all the AI Agents, check them individually, or select two for comparison."
-        refresh={refresh}
+        actions={[
+          {
+            action: refresh,
+            label: "Refresh",
+            icon: "refresh",
+            tooltipText: "Re-fresh to get the latest data.",
+            disabled: false
+          },
+          {
+            action: refresh,
+            label: "Compare",
+            icon: "comparison",
+            tooltipText: "Select two agents to compare them",
+            disabled: true
+          }
+        ]}
       />
       <AgentsListComp agentsList={agentsList} />
     </RootContainer>

@@ -19,11 +19,12 @@ function AgentCard({ agent }: { agent: Agent }) {
       </FlexContainer>
       <p>{agent.description}</p>
       <ButtonsContainer>
+        <ButtonComp onClick={handleRedirectToDetailView}>Details</ButtonComp>
         <ButtonComp
           intent={Intent.PRIMARY}
           onClick={handleRedirectToDetailView}
         >
-          Details
+          Compare
         </ButtonComp>
       </ButtonsContainer>
     </CardContainer>
