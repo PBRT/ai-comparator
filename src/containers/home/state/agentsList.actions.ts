@@ -1,3 +1,4 @@
+import { RootState } from "../../../redux/rootReducer";
 import { getAgentApiInstance } from "../../../api/agents.api";
 import {
   REQUEST_AGENTS_LIST,
@@ -9,7 +10,11 @@ import {
 
 // Retrieve list of agents and handle success/error
 export function requestAgentsList(): AgentsListThunkResult {
-  return (dispatch: AgentsListThunkDispatch) => {
+  return (dispatch: AgentsListThunkDispatch, getState: () => RootState) => {
+    const { agentsList: { list, error } } = getState();
+    if (error === null && list.length > 0) {
+      return;
+    }
     dispatch({ type: REQUEST_AGENTS_LIST });
     return getAgentApiInstance()
       .listAgents()

@@ -33,7 +33,7 @@ export type AgentsListActionType =
   | ErrorAgentsListAction;
 
 export type AgentsListThunkResult = ThunkAction<
-  Promise<AgentsListActionType>,
+  Promise<AgentsListActionType> | undefined,
   RootState,
   undefined,
   AgentsListActionType

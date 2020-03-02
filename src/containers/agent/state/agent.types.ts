@@ -7,26 +7,31 @@ export const REQUEST_AGENT = "REQUEST_AGENT";
 export const RECEIVE_AGENT = "RECEIVE_AGENT";
 export const ERROR_AGENT = "ERROR_AGENT";
 
-export interface AgentDetailsState {
+export interface AgentDetails {
   isLoading: boolean;
   error: Error | null;
-  agents: {
-    [id: number]: Agent;
-  };
+  agent: Agent | null;
+}
+
+export interface AgentDetailsState {
+  [key: string]: AgentDetails;
 }
 
 export interface RequestAgentAction {
   type: typeof REQUEST_AGENT;
+  id: string;
 }
 
 export interface ReceiveAgentAction {
   type: typeof RECEIVE_AGENT;
   agent: Agent | null;
+  id: string;
 }
 
 export interface ErrorAgentAction {
   type: typeof ERROR_AGENT;
   error: Error;
+  id: string;
 }
 
 export type AgentActionType =

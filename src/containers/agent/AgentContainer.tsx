@@ -5,16 +5,12 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { TEST_IDS } from "../../tests/test-ids";
-import { AgentDetailsState } from "./state/agent.types";
+import { AgentDetails } from "./state/agent.types";
 import { RootState } from "../../redux/rootReducer";
 import { requestAgent } from "./state/agent.actions";
-import { isInvalidID } from "../../utils/validateID";
 
-function AgentComp(props: {
-  agentsDetailsObject: AgentDetailsState;
-  id: number;
-}) {
-  const { agentsDetailsObject: { isLoading, error, agents }, id } = props;
+function AgentComp(props: { agentsDetailsObject: AgentDetails }) {
+  const { agentsDetailsObject: { isLoading, error, agent } } = props;
   if (isLoading) {
     return (
       <LoadingStateContainer>
@@ -37,8 +33,7 @@ function AgentComp(props: {
     );
   }
 
-  // The ID has been validated up-front, it's safe to use parseInt
-  if (agents[id] === null || agents[id] === undefined) {
+  if (agent === null) {
     return (
       <LoadingStateContainer>
         <Icon icon="error" iconSize={20} />
@@ -50,8 +45,6 @@ function AgentComp(props: {
       </LoadingStateContainer>
     );
   }
-
-  const agent = agents[id];
 
   return (
     <div>
@@ -80,11 +73,11 @@ function AgentContainer() {
   );
 
   const selectAgentsDetails = (state: RootState) => state.agentsDetails;
-  const agentsDetailsObject = useSelector(selectAgentsDetails);
+  const agentsDetails = useSelector(selectAgentsDetails);
 
-  return (
-    <div data-testid={TEST_IDS.CONTAINER_AGENT_ROOT}>
-      {isInvalidID(id) || id === undefined ? (
+  if (id === undefined || agentsDetails[id] === undefined) {
+    return (
+      <div data-testid={TEST_IDS.CONTAINER_AGENT_ROOT}>
         <LoadingStateContainer>
           <Icon icon="error" iconSize={20} />
           <h4>Invalid ID provided</h4>
@@ -93,12 +86,15 @@ function AgentContainer() {
             refresh the page, try again later, or contact your support team.
           </ErrorTextContainer>
         </LoadingStateContainer>
-      ) : (
-        <AgentComp
-          agentsDetailsObject={agentsDetailsObject}
-          id={parseInt(id)}
-        />
-      )}
+      </div>
+    );
+  }
+
+  const agentsDetailsObject = agentsDetails[id];
+
+  return (
+    <div data-testid={TEST_IDS.CONTAINER_AGENT_ROOT}>
+      <AgentComp agentsDetailsObject={agentsDetailsObject} />
     </div>
   );
 }

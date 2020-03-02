@@ -6,11 +6,7 @@ import {
   AgentActionType
 } from "./agent.types";
 
-const initialState: AgentDetailsState = {
-  error: null,
-  isLoading: false,
-  agents: {}
-};
+const initialState: AgentDetailsState = {};
 
 export default (
   state: AgentDetailsState = initialState,
@@ -19,23 +15,31 @@ export default (
   switch (action.type) {
     case REQUEST_AGENT:
       return {
-        error: null,
-        isLoading: true,
-        agents: state.agents
+        ...state,
+        [action.id]: {
+          error: null,
+          isLoading: true,
+          agent: null
+        }
       };
     case RECEIVE_AGENT:
       const { agent } = action;
       return {
-        error: null,
-        isLoading: false,
-        agents:
-          agent != null ? { ...state.agents, [agent.id]: agent } : state.agents
+        ...state,
+        [action.id]: {
+          error: null,
+          isLoading: false,
+          agent
+        }
       };
     case ERROR_AGENT:
       return {
-        error: action.error,
-        isLoading: false,
-        agents: state.agents
+        ...state,
+        [action.id]: {
+          error: action.error,
+          isLoading: false,
+          agent: null
+        }
       };
     default:
       return state;
