@@ -20,7 +20,8 @@ function NavButton({
   path,
   icon,
   testID,
-  isHomeButton
+  isHomeButton,
+  showInNavigation
 }: NavButtonProps) {
   const history = useHistory();
   const { innerWidth } = useWindowSize();
@@ -29,6 +30,10 @@ function NavButton({
 
   function handleClick() {
     history.push(path);
+  }
+
+  if (!showInNavigation) {
+    return null;
   }
   return (
     <Button
@@ -56,12 +61,13 @@ function Navbar({ routesConfig: { home, routes } }: Props) {
           key={home.path}
           icon={home.icon}
           testID={home.testID}
+          showInNavigation={home.showInNavigation}
           isHomeButton
         />
         <NavBarComponent.Divider />
       </NavBarComponent.Group>
       <NavBarComponent.Group align={Alignment.RIGHT}>
-        {routes.map(({ path, label, icon, testID }) => (
+        {routes.map(({ path, label, icon, testID, showInNavigation }) => (
           <NavButton
             label={label}
             path={path}
@@ -69,6 +75,7 @@ function Navbar({ routesConfig: { home, routes } }: Props) {
             icon={icon}
             testID={testID}
             isHomeButton={false}
+            showInNavigation={showInNavigation}
           />
         ))}
       </NavBarComponent.Group>

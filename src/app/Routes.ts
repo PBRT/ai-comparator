@@ -13,6 +13,7 @@ export interface RouteConfig {
   path: string;
   icon: IconName;
   testID: string;
+  showInNavigation: boolean;
 }
 
 // Extended with component for rendering
@@ -34,7 +35,8 @@ const ROUTES: RoutesConfig = {
     path: "/",
     icon: "doughnut-chart",
     component: HomeContainer,
-    testID: TEST_IDS.COMPONENT_NAVBAR_HOME_BUTTON
+    testID: TEST_IDS.COMPONENT_NAVBAR_HOME_BUTTON,
+    showInNavigation: true
   },
   routes: [
     {
@@ -42,14 +44,16 @@ const ROUTES: RoutesConfig = {
       path: "/compare-agents",
       icon: "comparison",
       component: CompareAgentsContainer,
-      testID: TEST_IDS.COMPONENT_NAVBAR_COMPARISON_BUTTON
+      testID: TEST_IDS.COMPONENT_NAVBAR_COMPARISON_BUTTON,
+      showInNavigation: true
     },
     {
       label: "Agent",
       path: "/agent/:id",
       icon: "locate",
       component: AgentContainer,
-      testID: TEST_IDS.COMPONENT_NAVBAR_AGENT_BUTTON
+      testID: TEST_IDS.COMPONENT_NAVBAR_AGENT_BUTTON,
+      showInNavigation: false
     }
   ]
 };

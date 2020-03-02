@@ -10,7 +10,6 @@ const {
   COMPONENT_NAVBAR,
   COMPONENT_NAVBAR_HOME_BUTTON,
   COMPONENT_NAVBAR_COMPARISON_BUTTON,
-  COMPONENT_NAVBAR_AGENT_BUTTON,
   CONTAINER_HOME_ROOT,
   CONTAINER_COMPARISON_ROOT,
   CONTAINER_AGENT_ROOT,
@@ -24,13 +23,11 @@ it("Test the navbar navigation between all the routes", () => {
   const navbar = getByTestId(COMPONENT_NAVBAR);
   const homeButton = getByTestId(COMPONENT_NAVBAR_HOME_BUTTON);
   const comparisonButton = getByTestId(COMPONENT_NAVBAR_COMPARISON_BUTTON);
-  const agentButton = getByTestId(COMPONENT_NAVBAR_AGENT_BUTTON);
 
   // Check existence of buttons
   expect(navbar).toBeDefined();
   expect(homeButton).toBeDefined();
   expect(comparisonButton).toBeDefined();
-  expect(agentButton).toBeDefined();
 
   // Check existence of containers
   expect(getByTestId(CONTAINER_HOME_ROOT)).toBeDefined();
@@ -38,10 +35,6 @@ it("Test the navbar navigation between all the routes", () => {
   // Navigate to comparison
   fireEvent.click(comparisonButton);
   expect(getByTestId(CONTAINER_COMPARISON_ROOT)).toBeDefined();
-
-  // Navigate to agent
-  fireEvent.click(agentButton);
-  expect(getByTestId(CONTAINER_AGENT_ROOT)).toBeDefined();
 
   // Navigate back home
   fireEvent.click(homeButton);
@@ -57,6 +50,21 @@ it("Test the 404 page", () => {
     </Router>
   );
   expect(getByTestId(CONTAINER_NOT_FOUND_ROOT)).toBeDefined();
+
+  // Go back home
+  history.push("/");
+  expect(getByTestId(CONTAINER_HOME_ROOT)).toBeDefined();
+});
+
+it("Test the Agent page", () => {
+  const history = createMemoryHistory();
+  history.push("/agent/1");
+  const { getByTestId } = render(
+    <Router history={history}>
+      <App />
+    </Router>
+  );
+  expect(getByTestId(CONTAINER_AGENT_ROOT)).toBeDefined();
 
   // Go back home
   history.push("/");
