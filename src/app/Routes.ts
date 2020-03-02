@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { IconName } from "@blueprintjs/icons";
+import { RouteComponentProps } from "react-router-dom";
 
 import { TEST_IDS } from "../tests/test-ids";
 import HomeContainer from "../containers/home/HomeContainer";
@@ -16,7 +17,7 @@ export interface RouteConfig {
 
 // Extended with component for rendering
 export interface RouteConfigWithComponent extends RouteConfig {
-  component: FC;
+  component: FC<RouteComponentProps>;
 }
 
 // Router-like data structure

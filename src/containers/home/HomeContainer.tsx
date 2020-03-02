@@ -124,7 +124,7 @@ const PanelDivider = styled(Divider)`
 
 const LoadingStateContainer = styled.div`
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
   margin: auto;
   text-align: center;
   margin-top: 40px;

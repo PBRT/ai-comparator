@@ -1,5 +1,6 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
+import { RootState } from "../../../redux/rootReducer";
 import { Agent } from "../../../api/agents.types";
 
 export const REQUEST_AGENTS_LIST = "REQUEST_AGENTS_LIST";
@@ -33,13 +34,13 @@ export type AgentsListActionType =
 
 export type AgentsListThunkResult = ThunkAction<
   Promise<AgentsListActionType>,
-  AgentsListState,
+  RootState,
   undefined,
   AgentsListActionType
 >;
 
 export type AgentsListThunkDispatch = ThunkDispatch<
-  AgentsListState,
+  RootState,
   undefined,
   AgentsListActionType
 >;
