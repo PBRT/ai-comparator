@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Card, Collapse, Button } from "@blueprintjs/core";
 
+import { device } from "../../styles/device";
+import statistics from "../../utils/statistics";
 import { Category, Task } from "../../api/agents.types";
 
 type Props = {
@@ -12,10 +14,18 @@ type Props = {
 function TaskCard({ category, tasks }: Props) {
   const taskKeys = Array.from(tasks.keys());
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <TaskContainer>
       <FlexContainerSpaced>
-        <TaskCategoryTitle>{category.toUpperCase()}</TaskCategoryTitle>
+        <div>
+          <TaskCategoryTitle>{category.toUpperCase()}</TaskCategoryTitle>
+          {statistics.map((stat, idx) => (
+            <StatContainer key={stat.id}>
+              <strong>{stat.name}</strong>: {stat.calculus(tasks)}
+            </StatContainer>
+          ))}
+        </div>
         <Button
           icon={isOpen ? "minus" : "plus"}
           text={isOpen ? "Hide" : "Show"}
@@ -51,7 +61,7 @@ const TaskContainer = styled(Card)`
 `;
 
 const TaskCategoryTitle = styled.h4`
-  margin: 0px;
+  margin: 0px 0px 8px;
 `;
 
 const FlexContainerSpaced = styled.div`
@@ -77,4 +87,12 @@ const TaskAttribute = styled.p`
 
 const TaskScore = styled(TaskAttribute)`
   text-align: right;
+`;
+
+const StatContainer = styled.div`
+  padding-right: 8px;
+  display: block;
+  @media ${device.mobileL} {
+    display: inline-block;
+  }
 `;
