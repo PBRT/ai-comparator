@@ -45,7 +45,7 @@ const ROUTES: RoutesConfig = {
     },
     {
       label: "Agent",
-      path: "/agent",
+      path: "/agent/:id",
       icon: "locate",
       component: AgentContainer,
       testID: TEST_IDS.COMPONENT_NAVBAR_AGENT_BUTTON

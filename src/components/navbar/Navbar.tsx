@@ -8,8 +8,8 @@ import {
 } from "@blueprintjs/core";
 
 import { TEST_IDS } from "../../tests/test-ids";
-import { RouteConfig, RoutesConfig } from "../../app/Routes";
 import { useWindowSize } from "../../utils/useWindowSize";
+import { RouteConfig, RoutesConfig } from "../../app/Routes";
 
 type NavButtonProps = RouteConfig & {
   isHomeButton: boolean | null;
