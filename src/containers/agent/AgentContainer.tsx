@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { Spinner, Icon } from "@blueprintjs/core";
-import React, { useCallback, useEffect } from "react";
+import React, { ReactNode, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { TEST_IDS } from "../../tests/test-ids";
 import { AgentDetails } from "./state/agent.types";
 import { RootState } from "../../redux/rootReducer";
 import { requestAgent } from "./state/agent.actions";
+import SectionHeader from "../../components/section-header/SectionHeader";
 
 function AgentComp(props: { agentsDetailsObject: AgentDetails }) {
   const { agentsDetailsObject: { isLoading, error, agent } } = props;
@@ -56,6 +57,25 @@ function AgentComp(props: { agentsDetailsObject: AgentDetails }) {
   );
 }
 
+function AgentContainerWrapper({
+  children,
+  refresh
+}: {
+  children: ReactNode;
+  refresh: () => void;
+}) {
+  return (
+    <div data-testid={TEST_IDS.CONTAINER_AGENT_ROOT}>
+      <SectionHeader
+        title="AI Agent Details"
+        subtitle="Scan in details the properties related to this agent"
+        refresh={refresh}
+      />
+      {children}
+    </div>
+  );
+}
+
 function AgentContainer() {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -63,6 +83,10 @@ function AgentContainer() {
     dispatch,
     id
   ]);
+
+  function refresh() {
+    dispatch(requestAgent(id, false /* invalidate cache */));
+  }
 
   // Load agents on the first render only
   useEffect(
@@ -77,7 +101,7 @@ function AgentContainer() {
 
   if (id === undefined || agentsDetails[id] === undefined) {
     return (
-      <div data-testid={TEST_IDS.CONTAINER_AGENT_ROOT}>
+      <AgentContainerWrapper refresh={refresh}>
         <LoadingStateContainer>
           <Icon icon="error" iconSize={20} />
           <h4>Invalid ID provided</h4>
@@ -86,16 +110,16 @@ function AgentContainer() {
             refresh the page, try again later, or contact your support team.
           </ErrorTextContainer>
         </LoadingStateContainer>
-      </div>
+      </AgentContainerWrapper>
     );
   }
 
   const agentsDetailsObject = agentsDetails[id];
 
   return (
-    <div data-testid={TEST_IDS.CONTAINER_AGENT_ROOT}>
+    <AgentContainerWrapper refresh={refresh}>
       <AgentComp agentsDetailsObject={agentsDetailsObject} />
-    </div>
+    </AgentContainerWrapper>
   );
 }
 

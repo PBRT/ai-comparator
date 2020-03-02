@@ -1,15 +1,15 @@
 import React, { useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { Button, Divider, Spinner, Icon } from "@blueprintjs/core";
+import { Spinner, Icon } from "@blueprintjs/core";
 import { useDispatch, useSelector } from "react-redux";
 
-import { device } from "../../styles/device";
 import { TEST_IDS } from "../../tests/test-ids";
 import { RootState } from "../../redux/rootReducer";
 import { AgentsListState } from "./state/agentsList.types";
 import { requestAgentsList } from "./state/agentsList.actions";
 
 import AgentCard from "../../components/agent-card/AgentCard";
+import SectionHeader from "../../components/section-header/SectionHeader";
 
 function AgentsListComp(props: { agentsList: AgentsListState }) {
   const { agentsList: { isLoading, error, list } } = props;
@@ -71,19 +71,11 @@ function HomeContainer() {
 
   return (
     <RootContainer data-testid={TEST_IDS.CONTAINER_HOME_ROOT}>
-      <FlexContainer>
-        <HeaderContainer>
-          <Title>AI Dashboard</Title>
-          <Subtitle>
-            Visualize all the AI Agents, check them individually, or select two
-            for comparison.
-          </Subtitle>
-        </HeaderContainer>
-        <div>
-          <Button onClick={refresh} text="Refresh" icon="refresh" />
-        </div>
-      </FlexContainer>
-      <PanelDivider />
+      <SectionHeader
+        title="AI Dashboard"
+        subtitle="Visualize all the AI Agents, check them individually, or select two for comparison."
+        refresh={refresh}
+      />
       <AgentsListComp agentsList={agentsList} />
     </RootContainer>
   );
@@ -93,37 +85,6 @@ export default HomeContainer;
 
 const RootContainer = styled.div`
   text-align: left;
-`;
-
-const FlexContainer = styled.div`
-  text-align: center;
-  margin-bottom: 20px;
-
-  @media ${device.mobileL} {
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 0px;
-  }
-`;
-
-const HeaderContainer = styled.div`
-  margin-right: 8px;
-`;
-
-const Title = styled.h2`
-  margin-bottom: 4px;
-`;
-
-const Subtitle = styled.h5`
-  margin-top: 0px;
-`;
-
-const PanelDivider = styled(Divider)`
-  margin: 0px 0px 20px;
-  border-color: ${p => p.theme.colors.DARK_GRAY5};
 `;
 
 const LoadingStateContainer = styled.div`

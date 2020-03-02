@@ -11,7 +11,10 @@ import {
 } from "./agent.types";
 
 // Retrieve list of agents and handle success/error
-export function requestAgent(id: string | undefined): AgentThunkResult {
+export function requestAgent(
+  id: string | undefined,
+  useCache: boolean = true
+): AgentThunkResult {
   return (dispatch: AgentThunkDispatch, getState: () => RootState) => {
     // Handled in the view directly
     if (id === undefined) {
@@ -36,7 +39,8 @@ export function requestAgent(id: string | undefined): AgentThunkResult {
     if (
       entry !== undefined &&
       entry.error === null &&
-      entry.isLoading === false
+      entry.isLoading === false &&
+      useCache === true
     ) {
       return;
     }
