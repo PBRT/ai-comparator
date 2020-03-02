@@ -9,6 +9,7 @@ import { AgentDetails } from "./state/agent.types";
 import { RootState } from "../../redux/rootReducer";
 import { requestAgent } from "./state/agent.actions";
 import SectionHeader from "../../components/section-header/SectionHeader";
+import AgentDetailCard from "../../components/agent-detail-card/AgentDetailCard";
 
 function AgentComp(props: { agentsDetailsObject: AgentDetails }) {
   const { agentsDetailsObject: { isLoading, error, agent } } = props;
@@ -47,14 +48,7 @@ function AgentComp(props: { agentsDetailsObject: AgentDetails }) {
     );
   }
 
-  return (
-    <div>
-      <h1>Agent ID: {agent.id}</h1>
-      <h3>Agent Name: {agent.name}</h3>
-      <h3>Agent description: {agent.description}</h3>
-      <h3>Agent Tasks: {agent.tasks.length}</h3>
-    </div>
-  );
+  return <AgentDetailCard agent={agent} />;
 }
 
 function AgentContainerWrapper({

@@ -7,9 +7,11 @@ export interface Agent {
   readonly tasks: Task[];
 }
 
+export type Category = "memory" | "planning" | "logic";
+
 export interface Task {
   readonly id: string;
   readonly name: string;
-  readonly category: "memory" | "planning" | "logic";
+  readonly category: Category;
   readonly score: number;
 }
