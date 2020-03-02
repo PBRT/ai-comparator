@@ -54,6 +54,10 @@ function HomeContainer() {
     dispatch
   ]);
 
+  function refresh() {
+    dispatch(requestAgentsList(false /* invalidate cache */));
+  }
+
   // Load agents on the first render only
   useEffect(
     () => {
@@ -76,7 +80,7 @@ function HomeContainer() {
           </Subtitle>
         </HeaderContainer>
         <div>
-          <Button onClick={getAgentsList} text="Refresh" icon="refresh" />
+          <Button onClick={refresh} text="Refresh" icon="refresh" />
         </div>
       </FlexContainer>
       <PanelDivider />

@@ -9,10 +9,12 @@ import {
 } from "./agentsList.types";
 
 // Retrieve list of agents and handle success/error
-export function requestAgentsList(): AgentsListThunkResult {
+export function requestAgentsList(
+  useCache: boolean = true
+): AgentsListThunkResult {
   return (dispatch: AgentsListThunkDispatch, getState: () => RootState) => {
     const { agentsList: { list, error } } = getState();
-    if (error === null && list.length > 0) {
+    if (error === null && list.length > 0 && useCache === true) {
       return;
     }
     dispatch({ type: REQUEST_AGENTS_LIST });
