@@ -2,7 +2,8 @@ import reducer from "../state/compareAgents.reducer";
 import {
   SELECT_AGENT_TO_COMPARE,
   DESELECT_AGENT_TO_COMPARE,
-  RESET_AGENT_TO_COMPARE
+  RESET_AGENT_TO_COMPARE,
+  REMOVE_AND_ADD_AGENT_TO_COMPARE
 } from "../state/compareAgents.types";
 
 describe("Compare agent list reducer", () => {
@@ -81,5 +82,20 @@ describe("Compare agent list reducer", () => {
       id: 124
     });
     expect(reducerVal2.agentsSelected.size).toEqual(1);
+  });
+  it("should handle add and remove", () => {
+    const reducerVal = reducer(undefined, {
+      type: RESET_AGENT_TO_COMPARE
+    });
+    const reducerVal1 = reducer(reducerVal, {
+      type: SELECT_AGENT_TO_COMPARE,
+      id: 124
+    });
+    const reducerVal2 = reducer(reducerVal1, {
+      type: REMOVE_AND_ADD_AGENT_TO_COMPARE,
+      idToAdd: 456,
+      idToRemove: 124
+    });
+    expect(reducerVal2.agentsSelected.has(456)).toEqual(true);
   });
 });

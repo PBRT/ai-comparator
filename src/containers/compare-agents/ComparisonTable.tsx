@@ -186,6 +186,8 @@ export default ComparisonTable;
 
 const TableContainer = styled.table`
   width: 100%;
+  table-layout: fixed;
+  margin-top: 20px;
 `;
 
 const DeltaContainer = styled.span`
