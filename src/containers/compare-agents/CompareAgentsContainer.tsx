@@ -95,11 +95,7 @@ function AgentSelector({
   const defaultValue = `Agent ${index + 1}`;
   return (
     <div className="bp3-select" style={{ marginLeft: isRight ? 8 : 0 }}>
-      <select
-        defaultValue={defaultValue}
-        value={value}
-        onChange={handleOnChange}
-      >
+      <select value={value} onChange={handleOnChange}>
         <option value={defaultValue} disabled>
           {defaultValue}
         </option>
