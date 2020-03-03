@@ -28,7 +28,7 @@ function TaskCard({ category, tasks }: Props) {
         </div>
         <Button
           icon={isOpen ? "minus" : "plus"}
-          text={isOpen ? "Hide" : "Show"}
+          text={isOpen ? "Hide" : "Details"}
           onClick={() => setIsOpen(!isOpen)}
         />
       </FlexContainerSpaced>

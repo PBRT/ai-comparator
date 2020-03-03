@@ -17,10 +17,10 @@ function AgentDetailCard({ agent }: Props) {
   const shardedTasksKeys = Array.from(shardedTasks.keys());
   return (
     <CardContainer interactive={false} elevation={Elevation.ONE}>
-      <FlexContainerSpaced>
-        <Title>{agent.name}</Title>
-        <Title># {agent.id}</Title>
-      </FlexContainerSpaced>
+      <AgentHeadline>
+        <AgentID># {agent.id}</AgentID>
+        <AgentTitle>{agent.name}</AgentTitle>
+      </AgentHeadline>
       <p>{agent.description}</p>
       <PanelDivider />
       <SectionTitle>Tasks per categories</SectionTitle>
@@ -55,15 +55,6 @@ const FlexContainer = styled.div`
   }
 `;
 
-const FlexContainerSpaced = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Title = styled.h3`
-  margin: 0px 0px 8px;
-`;
-
 const SectionTitle = styled.h4`
   margin: 0px 0px 16px;
 `;
@@ -78,4 +69,19 @@ const TasksContainer = styled.div`
   @media ${device.tablet} {
     width: 50%;
   }
+`;
+
+const AgentHeadline = styled.div`
+  margin-bottom: 8px;
+`;
+
+const AgentTitle = styled.h3`
+  margin: 0px;
+  display: inline-block;
+`;
+
+const AgentID = styled.h3`
+  margin: 0px 8px 0px 0px;
+  display: inline-block;
+  opacity: 0.5;
 `;

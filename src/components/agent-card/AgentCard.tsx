@@ -39,14 +39,19 @@ function AgentCard({ agent, showActions }: Props) {
 
   return (
     <CardContainer interactive={false} elevation={Elevation.TWO}>
-      <FlexContainer>
+      <AgentHeadline>
+        <AgentID># {agent.id}</AgentID>
         <AgentTitle>{agent.name}</AgentTitle>
-        <AgentTitle># {agent.id}</AgentTitle>
-      </FlexContainer>
+      </AgentHeadline>
       <p>{agent.description}</p>
       {showActions === true && (
         <ButtonsContainer>
-          <ButtonComp onClick={handleRedirectToDetailView}>Details</ButtonComp>
+          <ButtonComp
+            onClick={handleRedirectToDetailView}
+            icon="grouped-bar-chart"
+          >
+            Info
+          </ButtonComp>
           <Tooltip
             disabled={!isButtonDisabled}
             content="You can select only up to two agents at once"
@@ -71,14 +76,19 @@ const CardContainer = styled(Card)`
   margin-bottom: 20px;
 `;
 
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-`;
-
 const AgentTitle = styled.h3`
   margin: 0px;
+  display: inline-block;
+`;
+
+const AgentID = styled.h3`
+  margin: 0px 8px 0px 0px;
+  display: inline-block;
+  opacity: 0.5;
+`;
+
+const AgentHeadline = styled.div`
+  margin-bottom: 8px;
 `;
 
 const ButtonsContainer = styled.div`
