@@ -1,8 +1,7 @@
-import styled from "styled-components";
 import { IconNames } from "@blueprintjs/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { Spinner, Icon, Intent } from "@blueprintjs/core";
+import { Intent } from "@blueprintjs/core";
 import React, { ReactNode, useCallback, useEffect } from "react";
 
 import { TEST_IDS } from "../../tests/test-ids";
@@ -11,41 +10,29 @@ import { RootState } from "../../redux/rootReducer";
 import { requestAgent } from "./state/agent.actions";
 import SectionHeader from "../../components/section-header/SectionHeader";
 import AgentDetailCard from "../../components/agent-detail-card/AgentDetailCard";
+import { LoadLoading, LoadError } from "../../components/load/LoadComponents";
 
 function AgentComp(props: { agentsDetailsObject: AgentDetails }) {
   const { agentsDetailsObject: { isLoading, error, agent } } = props;
   if (isLoading) {
-    return (
-      <LoadingStateContainer>
-        <Spinner size={30} />
-        <h4>Loading agent details</h4>
-      </LoadingStateContainer>
-    );
+    return <LoadLoading text="Loading agent details..." />;
   }
 
   if (error != null) {
     return (
-      <LoadingStateContainer>
-        <Icon icon="error" iconSize={20} />
-        {error.message !== null && <h4>{error.message}</h4>}
-        <ErrorTextContainer>
-          Something went wrong while loading this agent.<br />You can either
-          refresh the page, try again later, or contact your support team.
-        </ErrorTextContainer>
-      </LoadingStateContainer>
+      <LoadError
+        text={error.message}
+        description="Something went wrong while loading this agent. You can either refresh the page, try again later, or contact your support team."
+      />
     );
   }
 
   if (agent === null) {
     return (
-      <LoadingStateContainer>
-        <Icon icon="error" iconSize={20} />
-        <h4>Agent cannot be found</h4>
-        <ErrorTextContainer>
-          This agent doesn't seems to exist.<br />Try to select another one from
-          the dashboard.
-        </ErrorTextContainer>
-      </LoadingStateContainer>
+      <LoadError
+        text="Agent cannot be found"
+        description="This agent doesn't seems to exist. Try to select another one from the dashboard."
+      />
     );
   }
 
@@ -118,14 +105,10 @@ function AgentContainer() {
   if (id === undefined || agentsDetails[id] === undefined) {
     return (
       <AgentContainerWrapper refresh={refresh}>
-        <LoadingStateContainer>
-          <Icon icon="error" iconSize={20} />
-          <h4>Invalid ID provided</h4>
-          <ErrorTextContainer>
-            Something went wrong while loading this agent.<br />You can either
-            refresh the page, try again later, or contact your support team.
-          </ErrorTextContainer>
-        </LoadingStateContainer>
+        <LoadError
+          text="Invalid ID provided"
+          description="Something went wrong while loading this agent. You can either refresh the page, try again later, or contact your support team."
+        />
       </AgentContainerWrapper>
     );
   }
@@ -140,15 +123,3 @@ function AgentContainer() {
 }
 
 export default AgentContainer;
-
-const LoadingStateContainer = styled.div`
-  width: 100%;
-  max-width: 480px;
-  margin: auto;
-  text-align: center;
-  margin-top: 40px;
-`;
-
-const ErrorTextContainer = styled.p`
-  margin: 0px;
-`;

@@ -1,8 +1,7 @@
-import styled from "styled-components";
 import React, { ReactNode } from "react";
 import { useHistory } from "react-router-dom";
 import { IconNames } from "@blueprintjs/icons";
-import { Icon, Intent } from "@blueprintjs/core";
+import { Intent } from "@blueprintjs/core";
 import { useDispatch, useSelector } from "react-redux";
 
 import { TEST_IDS } from "../../tests/test-ids";
@@ -10,6 +9,7 @@ import { RootState } from "../../redux/rootReducer";
 import DualAgentsContainer from "./DualAgentsContainer";
 import { requestAgent } from "../agent/state/agent.actions";
 import SectionHeader from "../../components/section-header/SectionHeader";
+import { LoadError } from "../../components/load/LoadComponents";
 
 function CompareAgentContainerWrapper({
   children,
@@ -67,14 +67,10 @@ function CompareAgentsContainer() {
   if (agentsSelected.size !== 2) {
     return (
       <CompareAgentContainerWrapper refresh={refresh} hasError={true}>
-        <LoadingStateContainer>
-          <Icon icon="error" iconSize={20} />
-          <h4>Agents to compare not detected</h4>
-          <ErrorTextContainer>
-            No agents to compare are currently selected . Go back to the home
-            page and select two agents.
-          </ErrorTextContainer>
-        </LoadingStateContainer>
+        <LoadError
+          text="Agents to compare not detected"
+          description="No agents to compare are currently selected. Go back to the homepage and select two agents."
+        />
       </CompareAgentContainerWrapper>
     );
   }
@@ -87,15 +83,3 @@ function CompareAgentsContainer() {
 }
 
 export default CompareAgentsContainer;
-
-const LoadingStateContainer = styled.div`
-  width: 100%;
-  max-width: 480px;
-  margin: auto;
-  text-align: center;
-  margin-top: 40px;
-`;
-
-const ErrorTextContainer = styled.p`
-  margin: 0px;
-`;

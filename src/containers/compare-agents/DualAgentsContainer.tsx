@@ -1,12 +1,11 @@
-import styled from "styled-components";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Spinner, Icon } from "@blueprintjs/core";
 
 import { Agent } from "../../api/agents.types";
 import ComparisonTable from "./ComparisonTable";
 import { RootState } from "../../redux/rootReducer";
 import { requestAgent } from "../agent/state/agent.actions";
+import { LoadLoading, LoadError } from "../../components/load/LoadComponents";
 
 type DualAgentsProps = {
   firstAgent: Agent | null;
@@ -16,14 +15,10 @@ type DualAgentsProps = {
 function DualAgents({ firstAgent, secondAgent }: DualAgentsProps) {
   if (firstAgent === null || secondAgent === null) {
     return (
-      <LoadingStateContainer>
-        <Icon icon="error" iconSize={20} />
-        <h4>Invalid IDs provided</h4>
-        <ErrorTextContainer>
-          Something went wrong while loading those agents.<br />You can either
-          refresh the page, try again later, or contact your support team.
-        </ErrorTextContainer>
-      </LoadingStateContainer>
+      <LoadError
+        text="Invalid IDs provided"
+        description="Something went wrong while loading those agents. You can either refresh the page, try again later, or contact your support team."
+      />
     );
   }
   return <ComparisonTable firstAgent={firstAgent} secondAgent={secondAgent} />;
@@ -58,14 +53,10 @@ function DualAgentsContainer({ ids }: Props) {
 
   if (hasAnyAgentsMissing) {
     return (
-      <LoadingStateContainer>
-        <Icon icon="error" iconSize={20} />
-        <h4>Invalid IDs provided</h4>
-        <ErrorTextContainer>
-          Something went wrong while loading those agents.<br />You can either
-          refresh the page, try again later, or contact your support team.
-        </ErrorTextContainer>
-      </LoadingStateContainer>
+      <LoadError
+        text="Invalid IDs provided"
+        description="Something went wrong while loading those agents. You can either refresh the page, try again later, or contact your support team."
+      />
     );
   }
 
@@ -74,31 +65,16 @@ function DualAgentsContainer({ ids }: Props) {
   const hasAgentsWithError = agents.some(agent => agent.error !== null);
 
   if (hasAgentsLoading) {
-    return (
-      <LoadingStateContainer>
-        <Spinner size={30} />
-        <h4>Loading comparison data</h4>
-      </LoadingStateContainer>
-    );
+    return <LoadLoading text="Loading comparison data..." />;
   }
 
   if (hasAgentsWithError) {
+    const errorNumber = agents.filter(({ error }) => error !== null).length;
     return (
-      <LoadingStateContainer>
-        <Icon icon="error" iconSize={20} />
-        {agents.map(
-          ({ error }, idx) =>
-            error !== null ? (
-              <h4 key={`${error.message}-${idx}`}>
-                Error {idx}: {error.message}
-              </h4>
-            ) : null
-        )}
-        <ErrorTextContainer>
-          Something went wrong while loading the agents.<br />You can either
-          refresh the page, try again later, or contact your support team.
-        </ErrorTextContainer>
-      </LoadingStateContainer>
+      <LoadError
+        text={`${errorNumber} error${errorNumber > 1 ? "s" : ""} found`}
+        description="Something went wrong while loading those agents. You can either refresh the page, try again later, or contact your support team."
+      />
     );
   }
 
@@ -108,15 +84,3 @@ function DualAgentsContainer({ ids }: Props) {
 }
 
 export default DualAgentsContainer;
-
-const LoadingStateContainer = styled.div`
-  width: 100%;
-  max-width: 480px;
-  margin: auto;
-  text-align: center;
-  margin-top: 40px;
-`;
-
-const ErrorTextContainer = styled.p`
-  margin: 0px;
-`;
