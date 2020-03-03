@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, Elevation, Intent, Tooltip } from "@blueprintjs/core";
+import { Button, Card, Elevation, Tooltip, Checkbox } from "@blueprintjs/core";
 
 import { Agent } from "../../api/agents.types";
 import { RootState } from "../../redux/rootReducer";
@@ -25,8 +25,7 @@ function AgentCard({ agent, showActions }: Props) {
   const selectCompareAgents = (state: RootState) => state.compareAgents;
   const { agentsSelected } = useSelector(selectCompareAgents);
   const isAgentSelected = agentsSelected.has(agent.id);
-  const buttonLabel = isAgentSelected ? "Deselect" : "Select";
-  const isButtonDisabled = agentsSelected.size === 2 && !isAgentSelected;
+  const isSelectDisabled = agentsSelected.size === 2 && !isAgentSelected;
 
   function toggleSelection() {
     // Deselect
@@ -39,33 +38,36 @@ function AgentCard({ agent, showActions }: Props) {
 
   return (
     <CardContainer interactive={false} elevation={Elevation.TWO}>
-      <AgentHeadline>
-        <AgentID># {agent.id}</AgentID>
-        <AgentTitle>{agent.name}</AgentTitle>
-      </AgentHeadline>
-      <p>{agent.description}</p>
-      {showActions === true && (
-        <ButtonsContainer>
-          <ButtonComp
-            onClick={handleRedirectToDetailView}
-            icon="grouped-bar-chart"
-          >
-            Info
-          </ButtonComp>
-          <Tooltip
-            disabled={!isButtonDisabled}
-            content="You can select only up to two agents at once"
-          >
+      <div>
+        <AgentHeadline>
+          <AgentID># {agent.id}</AgentID>
+          <AgentTitle>{agent.name}</AgentTitle>
+        </AgentHeadline>
+        <p>{agent.description}</p>
+        {showActions === true && (
+          <ButtonsContainer>
             <ButtonComp
-              intent={isAgentSelected ? Intent.WARNING : Intent.PRIMARY}
-              onClick={toggleSelection}
-              disabled={isButtonDisabled}
+              onClick={handleRedirectToDetailView}
+              icon="grouped-bar-chart"
             >
-              {buttonLabel}
+              Info
             </ButtonComp>
-          </Tooltip>
-        </ButtonsContainer>
-      )}
+          </ButtonsContainer>
+        )}
+      </div>
+      <div>
+        <Tooltip
+          disabled={!isSelectDisabled}
+          content="You can select only up to two agents at once"
+        >
+          <Checkbox
+            large
+            checked={isAgentSelected}
+            onChange={toggleSelection}
+            disabled={isSelectDisabled}
+          />
+        </Tooltip>
+      </div>
     </CardContainer>
   );
 }
@@ -74,6 +76,8 @@ export default AgentCard;
 
 const CardContainer = styled(Card)`
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const AgentTitle = styled.h3`
