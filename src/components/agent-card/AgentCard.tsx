@@ -11,7 +11,11 @@ import {
   selectAgentToCompare
 } from "../../containers/compare-agents/state/compareAgents.actions";
 
-function AgentCard({ agent }: { agent: Agent }) {
+type Props = {
+  agent: Agent;
+  showActions: boolean;
+};
+function AgentCard({ agent, showActions }: Props) {
   const history = useHistory();
   const dispatch = useDispatch();
   function handleRedirectToDetailView() {
@@ -34,27 +38,29 @@ function AgentCard({ agent }: { agent: Agent }) {
   }
 
   return (
-    <CardContainer interactive={true} elevation={Elevation.TWO}>
+    <CardContainer interactive={false} elevation={Elevation.TWO}>
       <FlexContainer>
         <AgentTitle>{agent.name}</AgentTitle>
         <AgentTitle># {agent.id}</AgentTitle>
       </FlexContainer>
       <p>{agent.description}</p>
-      <ButtonsContainer>
-        <ButtonComp onClick={handleRedirectToDetailView}>Details</ButtonComp>
-        <Tooltip
-          disabled={!isButtonDisabled}
-          content="You can select only up to two agents at once"
-        >
-          <ButtonComp
-            intent={isAgentSelected ? Intent.WARNING : Intent.PRIMARY}
-            onClick={toggleSelection}
-            disabled={isButtonDisabled}
+      {showActions === true && (
+        <ButtonsContainer>
+          <ButtonComp onClick={handleRedirectToDetailView}>Details</ButtonComp>
+          <Tooltip
+            disabled={!isButtonDisabled}
+            content="You can select only up to two agents at once"
           >
-            {buttonLabel}
-          </ButtonComp>
-        </Tooltip>
-      </ButtonsContainer>
+            <ButtonComp
+              intent={isAgentSelected ? Intent.WARNING : Intent.PRIMARY}
+              onClick={toggleSelection}
+              disabled={isButtonDisabled}
+            >
+              {buttonLabel}
+            </ButtonComp>
+          </Tooltip>
+        </ButtonsContainer>
+      )}
     </CardContainer>
   );
 }

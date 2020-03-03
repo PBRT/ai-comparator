@@ -41,7 +41,7 @@ function AgentsListComp(props: { agentsList: AgentsListState }) {
     <>
       {list.map(agent => (
         <div key={agent.id}>
-          <AgentCard agent={agent} />
+          <AgentCard agent={agent} showActions />
         </div>
       ))}
     </>
