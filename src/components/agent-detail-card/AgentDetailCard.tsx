@@ -4,8 +4,9 @@ import { Card, Elevation, Divider } from "@blueprintjs/core";
 
 import TaskCard from "./TaskCard";
 import TaskGraph from "./TaskGraph";
-import { Agent } from "../../api/agents.types";
 import { device } from "../../styles/device";
+import { Agent } from "../../api/agents.types";
+import AgentHeader from "../../components/agent-header/AgentHeader";
 import { shardTasksPerCategories } from "../../utils/shardTasks";
 
 type Props = {
@@ -17,10 +18,7 @@ function AgentDetailCard({ agent }: Props) {
   const shardedTasksKeys = Array.from(shardedTasks.keys());
   return (
     <CardContainer interactive={false} elevation={Elevation.ONE}>
-      <AgentHeadline>
-        <AgentID># {agent.id}</AgentID>
-        <AgentTitle>{agent.name}</AgentTitle>
-      </AgentHeadline>
+      <AgentHeader agent={agent} />
       <p>{agent.description}</p>
       <PanelDivider />
       <SectionTitle>Tasks per categories</SectionTitle>
@@ -69,19 +67,4 @@ const TasksContainer = styled.div`
   @media ${device.tablet} {
     width: 50%;
   }
-`;
-
-const AgentHeadline = styled.div`
-  margin-bottom: 8px;
-`;
-
-const AgentTitle = styled.h3`
-  margin: 0px;
-  display: inline-block;
-`;
-
-const AgentID = styled.h3`
-  margin: 0px 8px 0px 0px;
-  display: inline-block;
-  opacity: 0.5;
 `;

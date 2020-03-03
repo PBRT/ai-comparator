@@ -6,6 +6,7 @@ import { Button, Card, Elevation, Tooltip, Checkbox } from "@blueprintjs/core";
 
 import { Agent } from "../../api/agents.types";
 import { RootState } from "../../redux/rootReducer";
+import AgentHeader from "../../components/agent-header/AgentHeader";
 import {
   deselectAgentToCompare,
   selectAgentToCompare
@@ -39,10 +40,7 @@ function AgentCard({ agent, showActions }: Props) {
   return (
     <CardContainer interactive={false} elevation={Elevation.TWO}>
       <div>
-        <AgentHeadline>
-          <AgentID># {agent.id}</AgentID>
-          <AgentTitle>{agent.name}</AgentTitle>
-        </AgentHeadline>
+        <AgentHeader agent={agent} />
         <p>{agent.description}</p>
         {showActions === true && (
           <ButtonsContainer>
@@ -78,21 +76,6 @@ const CardContainer = styled(Card)`
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
-`;
-
-const AgentTitle = styled.h3`
-  margin: 0px;
-  display: inline-block;
-`;
-
-const AgentID = styled.h3`
-  margin: 0px 8px 0px 0px;
-  display: inline-block;
-  opacity: 0.5;
-`;
-
-const AgentHeadline = styled.div`
-  margin-bottom: 8px;
 `;
 
 const ButtonsContainer = styled.div`

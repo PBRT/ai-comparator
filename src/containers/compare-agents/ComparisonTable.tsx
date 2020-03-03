@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { device } from "../../styles/device";
 import { Agent } from "../../api/agents.types";
+import AgentHeader from "../../components/agent-header/AgentHeader";
 import {
   ComparisonResult,
   shardTasksPerCategories,
@@ -104,9 +105,15 @@ function ComparisonTable({ firstAgent, secondAgent }: Props) {
     <TableContainer className="bp3-html-table bp3-html-table-striped">
       <thead>
         <tr>
-          <th>Category</th>
-          <th>{firstAgent.name}</th>
-          <th>{secondAgent.name}</th>
+          <th>
+            <CategoryHeader>Category</CategoryHeader>
+          </th>
+          <th>
+            <AgentHeader agent={firstAgent} noMarginBottom />
+          </th>
+          <th>
+            <AgentHeader agent={secondAgent} noMarginBottom />
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -205,4 +212,8 @@ const LineDisplay = styled.span`
     display: inline;
     text-align: left;
   }
+`;
+
+const CategoryHeader = styled.h3`
+  margin: 0px;
 `;
