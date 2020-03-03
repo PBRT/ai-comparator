@@ -27,17 +27,18 @@ function StatCellWithComparison({
   const keys = Array.from(values.keys());
   return (
     <div>
-      {keys.map(key => {
+      {keys.map((key, idx) => {
         const val = values.get(key);
+        const isLast = idx === keys.length - 1;
         return (
-          <StatComp key={`${key}-${id}`}>
+          <StatComp key={`${key}-${id}`} isLast={isLast}>
             <LineDisplay>{key}: </LineDisplay>
             <LineDisplay>{val !== undefined ? val.value : "-"} </LineDisplay>
             {val !== undefined &&
               val.delta !== undefined &&
               val.delta > 0 && (
                 <LineDisplay>
-                  (<DeltaContainer>+{val.delta}%</DeltaContainer>)
+                  <DeltaContainer>+{val.delta}%</DeltaContainer>
                 </LineDisplay>
               )}
           </StatComp>
@@ -62,10 +63,11 @@ function StatCellWithoutComparison({
   const keys = Array.from(values.keys());
   return (
     <div>
-      {keys.map(key => {
+      {keys.map((key, idx) => {
         const val = values.get(key);
+        const isLast = idx === keys.length - 1;
         return (
-          <StatComp key={`${key}-${id}`}>
+          <StatComp key={`${key}-${id}`} isLast={isLast}>
             <LineDisplay>{key}: </LineDisplay>
             <LineDisplay>{val !== undefined ? val : "-"} </LineDisplay>
           </StatComp>
@@ -183,10 +185,17 @@ const DeltaContainer = styled.span`
   background-color: #15b371;
   border-radius: 4px;
   padding: 2px;
+  margin-left: 0px;
+  @media ${device.mobileL} {
+    margin-left: 8px;
+  }
 `;
 
-const StatComp = styled.div`
-  margin-bottom: 8px;
+const StatComp =
+  styled.div <
+  { isLast: boolean } >
+  `
+  margin-bottom: ${props => (props.isLast ? 0 : 16)}px;
 `;
 
 const LineDisplay = styled.span`

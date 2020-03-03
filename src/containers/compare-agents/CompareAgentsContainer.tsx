@@ -36,7 +36,7 @@ function CompareAgentContainerWrapper({
             icon: IconNames.CROSS,
             tooltipText: "Re-fresh to get the latest data.",
             disabled: false,
-            intent: Intent.DANGER
+            intent: Intent.NONE
           },
           {
             action: refresh,

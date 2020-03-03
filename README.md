@@ -45,7 +45,6 @@ Different kind of tests are covering this product:
 
 * **View testing**:Check if all the views can be rendered and are not broken.
 * **Reducers testing**: Ensure non-regression on refactor and data-structures.
-* **Component testing**: Only for major components such as list view to check it renders properly.
 
 ### Libraries
 
@@ -75,9 +74,10 @@ To build this project, I've used the following:
   * [Redux Logger](https://github.com/LogRocket/redux-logger): Log actions fired and updated state in the console.
   * [Netlify](https://www.netlify.com/): Hooked to GitHub for easy deploy on master change, used for hosting online.
 
-### Room for improvements
+### Next steps
 
 Here's a list of things to improve over time with this project:
 
 * **Caching invalidation**: At the moment, when an object is loaded it's cached. The only way to invalidate it is by reload the page or click on _refresh_ in the UI as a user. A better version would be to invalidate using timestamps or others approaches. That would depend heavily on the requirements (how much the data needs to be fresh...).
 * **agentsDetails parallel fetch**: The agentsDetails action API only allow to fetch one user at the time. That's sub-optimal in term of request and actions dispatched. A refactor to support multiple-ids fetch executed in parallel with `Promise.all` would improve that.
+* **Test coverage**: There's some basic integrations test to ensure the app is working well, but they're very limited. Adding others flows is crucial to avoid big issues overtime. Same for **component level testing** which needs to be added using snapshots.
