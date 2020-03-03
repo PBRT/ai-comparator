@@ -9,6 +9,7 @@ import { TEST_IDS } from "../../tests/test-ids";
 import { RootState } from "../../redux/rootReducer";
 import { AgentsListState } from "./state/agentsList.types";
 import { requestAgentsList } from "./state/agentsList.actions";
+import { resetAgentToCompare } from "../compare-agents/state/compareAgents.actions";
 
 import AgentCard from "../../components/agent-card/AgentCard";
 import SectionHeader from "../../components/section-header/SectionHeader";
@@ -53,6 +54,9 @@ function HomeContainer() {
   const getAgentsList = useCallback(() => dispatch(requestAgentsList()), [
     dispatch
   ]);
+  const resetAgent = useCallback(() => dispatch(resetAgentToCompare()), [
+    dispatch
+  ]);
   const history = useHistory();
   function handleRedirectToCompareView() {
     history.push(`/compare-agents`);
@@ -66,8 +70,9 @@ function HomeContainer() {
   useEffect(
     () => {
       getAgentsList();
+      resetAgent();
     },
-    [getAgentsList]
+    [getAgentsList, resetAgent]
   );
 
   const selectAgentsList = (state: RootState) => state.agentsList;

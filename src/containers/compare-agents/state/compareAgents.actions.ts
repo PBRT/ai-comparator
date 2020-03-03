@@ -18,7 +18,7 @@ export function deselectAgentToCompare(id: number) {
   };
 }
 
-export function resetAgentToCompare(id: number) {
+export function resetAgentToCompare() {
   return {
     type: RESET_AGENT_TO_COMPARE
   };
