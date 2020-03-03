@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
 import { IconNames } from "@blueprintjs/icons";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
 import { Spinner, Icon, Intent } from "@blueprintjs/core";
 import React, { ReactNode, useCallback, useEffect } from "react";
 
@@ -59,6 +59,10 @@ function AgentContainerWrapper({
   children: ReactNode;
   refresh: () => void;
 }) {
+  const history = useHistory();
+  function handleClose() {
+    history.push("/");
+  }
   return (
     <div data-testid={TEST_IDS.CONTAINER_AGENT_ROOT}>
       <SectionHeader
@@ -66,12 +70,20 @@ function AgentContainerWrapper({
         subtitle="Scan in details the properties related to this agent"
         actions={[
           {
+            action: handleClose,
+            label: "Close",
+            icon: IconNames.CROSS,
+            tooltipText: "Re-fresh to get the latest data.",
+            disabled: false,
+            intent: Intent.DANGER
+          },
+          {
             action: refresh,
             label: "Refresh",
             icon: IconNames.REFRESH,
             tooltipText: "Re-fresh to get the latest data.",
             disabled: false,
-            intent: Intent.PRIMARY
+            intent: Intent.NONE
           }
         ]}
       />

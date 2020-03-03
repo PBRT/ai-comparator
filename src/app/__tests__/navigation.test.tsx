@@ -9,7 +9,6 @@ import { TEST_IDS } from "../../tests/test-ids";
 const {
   COMPONENT_NAVBAR,
   COMPONENT_NAVBAR_HOME_BUTTON,
-  COMPONENT_NAVBAR_COMPARISON_BUTTON,
   CONTAINER_HOME_ROOT,
   CONTAINER_COMPARISON_ROOT,
   CONTAINER_AGENT_ROOT,
@@ -22,22 +21,12 @@ it("Test the navbar navigation between all the routes", () => {
   // Navigation components
   const navbar = getByTestId(COMPONENT_NAVBAR);
   const homeButton = getByTestId(COMPONENT_NAVBAR_HOME_BUTTON);
-  const comparisonButton = getByTestId(COMPONENT_NAVBAR_COMPARISON_BUTTON);
 
   // Check existence of buttons
   expect(navbar).toBeDefined();
   expect(homeButton).toBeDefined();
-  expect(comparisonButton).toBeDefined();
 
   // Check existence of containers
-  expect(getByTestId(CONTAINER_HOME_ROOT)).toBeDefined();
-
-  // Navigate to comparison
-  fireEvent.click(comparisonButton);
-  expect(getByTestId(CONTAINER_COMPARISON_ROOT)).toBeDefined();
-
-  // Navigate back home
-  fireEvent.click(homeButton);
   expect(getByTestId(CONTAINER_HOME_ROOT)).toBeDefined();
 });
 
@@ -65,6 +54,21 @@ it("Test the Agent page", () => {
     </Router>
   );
   expect(getByTestId(CONTAINER_AGENT_ROOT)).toBeDefined();
+
+  // Go back home
+  history.push("/");
+  expect(getByTestId(CONTAINER_HOME_ROOT)).toBeDefined();
+});
+
+it("Test the Comparison page", () => {
+  const history = createMemoryHistory();
+  history.push("/compare-agents");
+  const { getByTestId } = render(
+    <Router history={history}>
+      <App />
+    </Router>
+  );
+  expect(getByTestId(CONTAINER_COMPARISON_ROOT)).toBeDefined();
 
   // Go back home
   history.push("/");

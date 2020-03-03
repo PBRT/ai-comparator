@@ -45,7 +45,7 @@ const ROUTES: RoutesConfig = {
       icon: "comparison",
       component: CompareAgentsContainer,
       testID: TEST_IDS.COMPONENT_NAVBAR_COMPARISON_BUTTON,
-      showInNavigation: true
+      showInNavigation: false
     },
     {
       label: "Agent",

@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import React, { ReactNode } from "react";
+import { useHistory } from "react-router-dom";
 import { IconNames } from "@blueprintjs/icons";
-import { useDispatch, useSelector } from "react-redux";
 import { Icon, Intent } from "@blueprintjs/core";
+import { useDispatch, useSelector } from "react-redux";
 
 import { TEST_IDS } from "../../tests/test-ids";
 import { RootState } from "../../redux/rootReducer";
@@ -19,12 +20,24 @@ function CompareAgentContainerWrapper({
   refresh: () => void;
   hasError: boolean;
 }) {
+  const history = useHistory();
+  function handleClose() {
+    history.push("/");
+  }
   return (
     <div data-testid={TEST_IDS.CONTAINER_COMPARISON_ROOT}>
       <SectionHeader
         title="AI Comparator"
         subtitle="Visualize the performances differences between two agents."
         actions={[
+          {
+            action: handleClose,
+            label: "Close",
+            icon: IconNames.CROSS,
+            tooltipText: "Re-fresh to get the latest data.",
+            disabled: false,
+            intent: Intent.DANGER
+          },
           {
             action: refresh,
             label: "Refresh",
